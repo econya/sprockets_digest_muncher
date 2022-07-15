@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Illustrate https://github.com/rails/sprockets/issues/749 .
 
-Things you may want to cover:
+This repo has two branches:
+  * `main`: vanilla installation
+  * `sprockets_4_0_3`: sprockets pinned to 4.0.3 via gemfile.
 
-* Ruby version
+To reproduce:
+(initially, clone this repo `git clone https://github.com/econya/sprockets_digest_muncher`)
 
-* System dependencies
+## Fail state (sprockets 4.1.1)
 
-* Configuration
+```bash
+bundle
+rails s
+```
 
-* Database creation
+And visit
+1. [`http://localhost:3000/assets/otherfile.txt`](http://localhost:3000/assets/otherfile.txt) -> should work
+1. [`http://localhost:3000/assets/test.txt`](http://localhost:3000/assets/test.txt) -> should work
+1. [`http://localhost:3000/assets/test-notafingerprint.txt`](http://localhost:3000/assets/test-notafingerprint.txt) -> should NOT work
 
-* Database initialization
 
-* How to run the test suite
+## Success state (sprockets 4.0.3)
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+git checkout sprockets_4_0_3
+bundle
+rails s
+```
 
-* Deployment instructions
-
-* ...
+And visit
+1. [`http://localhost:3000/assets/otherfile.txt`](http://localhost:3000/assets/otherfile.txt) -> should work
+1. [`http://localhost:3000/assets/test.txt`](http://localhost:3000/assets/test.txt) -> should work
+1. [`http://localhost:3000/assets/test-notafingerprint.txt`](http://localhost:3000/assets/test-notafingerprint.txt) -> should work
